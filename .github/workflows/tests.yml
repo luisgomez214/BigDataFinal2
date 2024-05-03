@@ -20,7 +20,6 @@ jobs:
         # this is an idempotent command useful for debugging
         docker ps -a
 
-        # after the database starts successfully,
         # it needs time to load the pagila data;
         # this should happen in <1 second,
         # but we sleep for a long time just to be sure that everything is loaded;
