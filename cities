@@ -1,0 +1,43 @@
+import random
+import pandas as pd
+from tqdm import tqdm
+
+# Load the dataset of cities from a CSV file
+# Replace 'path_to_cities_csv.csv' with the actual path to your dataset file
+cities_df = pd.read_csv('path_to_cities_csv.csv')
+
+# Function to generate random users
+def generate_users(num_users):
+    for i in tqdm(range(num_users), desc="Generating Users"):
+        user_id = i + 1
+        
+        # Generate a random username using a random word from word_list
+        random_word = random.choice(word_list)
+        random_suffix = str(random.randint(1, 9999))  # Optional: add a random suffix for uniqueness
+        username = random_word + random_suffix
+        
+        # Generate a random password using random words and numbers
+        password = (
+            random.choice(word_list)  # Random word from the list
+            + str(random.randint(0, 9))  # Random digit
+            + random.choice(word_list)  # Another random word
+        )   
+        
+        # Generate a random age for the user
+        age = random.randint(18, 80)
+        
+        # Randomly select a city from the cities dataset
+        random_city = cities_df.sample(n=1).iloc[0]  # Sample one city and retrieve the first row
+        city_name = random_city['city_name']  # Adjust the column name if necessary
+        
+        # Insert the user's information, including the city, into the database
+        connection.execute(
+            "INSERT INTO users (username, password, age, city) VALUES (%s, %s, %s, %s)",
+            (username, password, age, city_name)
+        )
+        
+        # Optional: print the user's information for demonstration
+        print(f"user {i + 1}: username = {username}, password = {password}, age = {age}, city = {city_name}")
+
+# Assuming `connection` is defined and set up elsewhere in the script
+
