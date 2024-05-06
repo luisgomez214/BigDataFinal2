@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Edit your message here</h2>
+
+{% if invalid_message %}
+<p class="red">
+ERROR: Invalid message.
+</p>
+{% elif message_sent %}
+<p class="green">
+Your message has been updated!
+</p>
+{% endif %}
+
+<form action="/edit_message" method="POST">
+    <input type="hidden" value="{{message_id}}" name="message_id">
+    <input type="hidden" value="{{original_message}}" name="original_message">
+    <table>
+        <tr>
+            <td><textarea name="updated_message" class="message_box" rows="4" cols="50">{{original_message}}</textarea></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="resend message" class="submit"></td>
+        </tr>
+    </table>
+</form>
+{% endblock %}

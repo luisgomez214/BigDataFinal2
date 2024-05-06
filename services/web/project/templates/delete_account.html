@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Delete your account here.</h2>
+
+{% if account_deleted %}
+<p>Your account has been deleted.</p>
+{% else %}
+<p>Are you sure you want to delete your account?</p>
+<form action="/account_deleted" method="POST">
+    <td><input type="submit" value="delete account" class="submit"></td>
+</form>
+{% endif %}
+{% endblock %}

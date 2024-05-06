@@ -1,16 +1,28 @@
 import os
+import sys
+
+#sys.path.append('/home/Luis.Gomez.25/BigDataFinal2/services/web')
+
 
 from flask import (
     Flask,
     jsonify,
     send_from_directory,
     request,
+    render_template
 )
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
+
+
 app = Flask(__name__)
 app.config.from_object("project.config.Config")
 db = SQLAlchemy(app)
+
+#engine = sqlalchemy.create_engine("postgresql://postgres:pass@postgres:5432", connect_args={
+#    'application_name': '__init__.py',
+#    })
+#connection = engine.connect()
 
 
 class User(db.Model):
@@ -26,7 +38,7 @@ class User(db.Model):
 
 @app.route("/")
 def hello_world():
-    return jsonify(hello="world")
+    return render_template('root.html')
 
 
 @app.route("/static/<path:filename>")
