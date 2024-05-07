@@ -1,6 +1,38 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Home :)</h2>
-<p>Welcome to twitter clone.</p>
+<h2>Home</h2>
+<p>Hello, this web page was designed as a twitter clone.</p>
+<p>Currently it is generating random users, ages, tweets, and time. </p> 
+
+<!-- Check if messages list is provided and not empty -->
+{% if messages %}
+    <h3>Messages</h3>
+    <ul>
+        <!-- Iterate over each message in the list -->
+        {% for message in messages %}
+        <li>
+            <p><strong>{{ message.username }}</strong> (Age: {{ message.age }}):</p>
+            <p>{{ message.message }}</p>
+            <p>Posted on: {{ message.created_at }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No messages available.</p>
+{% endif %}
+
+<!-- Pagination -->
+<div class="pagination">
+    <!-- Link to the previous page -->
+    {% if page_number > 1 %}
+    <a href="{{ url_for('root', page=page_number - 1) }}">Previous</a>
+    {% endif %}
+    
+    <!-- Link to the next page -->
+    {% if messages | length == 20 %}
+    <a href="{{ url_for('root', page=page_number + 1) }}">Next</a>
+    {% endif %}
+</div>
 {% endblock %}
+
