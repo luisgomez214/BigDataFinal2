@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Search</h2>
+
+<form action="/search" method="POST">
+    <input type="text" name="query" value="{{query}}">
+    <input type="submit" value="Search" class="submit">
+</form>
+
+{% for message in search_results %}
+<div class="container">
+    <h4><img src="{{message['image_url']}}">{{message['username']}} (age {{message['age']}})</h4>
+    {{message['highlighted_message']|safe}}
+    <p><span class="time-right">{{message['time']}}</span></p>
+</div>
+{% endfor %}
+
+<div>
+    {% if page_number > 1 %}
+    <a href="?query={{ query }}&page={{ page_number - 1 }}" class="submit">Previous</a>
+    {% endif %}
+
+    Page {{ page_number }}
+
+    {% if page_number < total_pages %}
+    <a href="?query={{ query }}&page={{ page_number + 1 }}" class="submit">Next</a>
+    {% endif %}
+</div>
+
+
+
+{% endblock %}
+

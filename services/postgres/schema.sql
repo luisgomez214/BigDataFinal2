@@ -2,10 +2,7 @@
 
 BEGIN;
 
-CREATE TABLE urls (
-    id_urls BIGSERIAL PRIMARY KEY,
-    url TEXT UNIQUE
-);
+--
 
 CREATE TABLE users (
     id BIGSERIAL PRIMARY KEY,
@@ -14,6 +11,13 @@ CREATE TABLE users (
     age INTEGER
 );
 
+
+CREATE TABLE urls (
+    id_urls BIGSERIAL PRIMARY KEY,
+    url TEXT UNIQUE
+);
+
+
 CREATE TABLE messages (
     id BIGSERIAL PRIMARY KEY,
     creator_id INTEGER NOT NULL REFERENCES users(id),
@@ -21,5 +25,9 @@ CREATE TABLE messages (
     time TIMESTAMP NOT NULL DEFAULT current_timestamp
 
 );
+
+CREATE INDEX m3 ON messages(time, id, creator_id, message);
+CREATE EXTENSION IF NOT EXISTS RUM;
+CREATE INDEX search_query ON messages USING RUM(to_tsvector('english', message));
 
 commit; 
